@@ -41,8 +41,10 @@ def parse_date(date_string: str):
 
 
 def format_duration(duration: dt.timedelta):
-    # just cut away the seconds part
-    return str(duration)[:-3]
+    total_minutes = duration / dt.timedelta(minutes=1)
+    hours = int(total_minutes // 60)
+    minutes = int(total_minutes % 60)
+    return f"{hours:02}:{minutes:02}"
 
 
 def parse_duration(duration_string: str):
