@@ -25,7 +25,6 @@ def parse_date(date_string: str) -> dt.date:
     except (TypeError, ValueError):
         raise FahrplanError(f"{date_string} is not in required format %Y-%m-%d")
 
-
 def _parse_time_items(time_string: str) -> list[int]:
     try:
         if '.' in time_string:  # ...just drop miliseconds.
@@ -43,10 +42,12 @@ def format_time(time: dt.time) -> str:
 def parse_time(time_string: str) -> dt.time:
     return dt.time(*_parse_time_items(time_string))
 
-
+  
 def format_duration(duration: dt.timedelta) -> str:
-    # just cut away the seconds part
-    return str(duration)[:-3]
+    total_minutes = duration / dt.timedelta(minutes=1)
+    hours = int(total_minutes // 60)
+    minutes = int(total_minutes % 60)
+    return f"{hours:02}:{minutes:02}"
 
 
 def parse_duration(duration_string: str) -> dt.timedelta:
